@@ -38,7 +38,7 @@ steps:
 
 - task: AzureWebApp@1
   inputs:
-    azureSubscription: 'my-cicd-app'
+    azureSubscription: 'azure-service-pipeline'
     appType: 'webApp'
     appName: 'my-cicd-app'
     package: '$(Build.ArtifactStagingDirectory)/app.zip'
