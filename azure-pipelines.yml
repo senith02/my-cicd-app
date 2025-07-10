@@ -4,15 +4,15 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '20.x'
+    versionSpec: '18.x'
   displayName: 'Install Node.js'
 
 - script: |
@@ -35,3 +35,12 @@ steps:
     artifactName: 'drop'
     publishLocation: 'Container'
   displayName: 'Publish artifact'
+
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'azure-service-connection'
+    appType: 'webApp'
+    appName: 'my-cicd-app'
+    package: '$(Build.ArtifactStagingDirectory)/app.zip'
+    deploymentMethod: 'auto'
+  displayName: 'Deploy to Azure App Service'
